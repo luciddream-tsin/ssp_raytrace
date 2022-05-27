@@ -3,7 +3,7 @@
 //
 
 #include "fstream"
-
+#include "vec3.h"
 
 
 int main(){
@@ -17,13 +17,12 @@ int main(){
 
     for (int i = 0; i < ny; ++i) {
         for (int j = 0; j < nx; ++j) {
-            float pr = float(i)/float(ny);
-            float pg = float(j)/float(nx);
-            float pb = 0.2;
 
-            int r = pr * 255;
-            int g = pg * 255;
-            int b = pb * 255;
+            vec3 color{float(i)/float(ny), float(j)/float(nx), 0.2};
+
+            int r = color[0] * 255;
+            int g = color[1] * 255;
+            int b = color[2] * 255;
 
             of << r << " " << g << " " << b << std::endl;
         }
