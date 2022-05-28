@@ -15,7 +15,6 @@
 
 vec3 ray_color(const ray& r, hitable_list &world, int depth){
 
-
     hit_record record;
     record.mat_ptr = nullptr;
     if (world.hit(r, 0.0001, FLT_MAX, record)){
@@ -29,6 +28,7 @@ vec3 ray_color(const ray& r, hitable_list &world, int depth){
         }else {
             return vec3{0, 0, 0};
         }
+
         //return (record.normal+1.0)*0.5;
     }
 
@@ -43,12 +43,17 @@ int main(){
     int ny = 100;
     std::ofstream of("background.ppm");
     of << "P3" << std::endl << nx << " " << ny << std::endl << "255" << "\n";
-    float sample_freq = 10;
-    hitable* list[2];
-    list[0] = new sphere(vec3{0, 0, -1}, 0.5, new lambertian(vec3{0.5, 0.5, 0.5}));
-    //list[1] = new sphere(vec3{0, -100.5, -1}, 100., new metal(vec3{0.5, 0.5, 0.5}));
+    float sample_freq = 20;
 
-    hitable_list world{list, 1};
+    hitable* list[4];
+    list[0] = new sphere(vec3{0, 0, -1}, 0.5, new lambertian(vec3{0.6, 0.2, 0.5}));
+    list[1] = new sphere(vec3{0, -100.5, -1}, 100., new lambertian(vec3{0.5, 0.5, 0.5}));
+    list[2] = new sphere(vec3{-1, 0, -1}, 0.5, new metal(vec3{0.5, 0.9, 0.5}));
+    list[3] = new sphere(vec3{1, 0, -1}, 0.5, new metal(vec3{0.5, 0.5, 0.5}));
+
+    hitable_list world{list, 4};
+
+
     camera came{};
 
     for (int j = ny-1; j >=0 ; --j) {
