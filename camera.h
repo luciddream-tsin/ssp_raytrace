@@ -11,14 +11,13 @@
 class camera {
 public:
     camera(){
-        left_lower_corner = vec3{-2.0, -1.0, -1.0};
-        horizontal = vec3{4.0, 0, 0};
-        vertical = vec3{0, 2.0, 0};
-        origin = vec3{0, 0, 0};
+        left_lower_corner = {-2.0, -1.0, -1.0};
+        horizontal = {4.0, 0, 0};
+        vertical = {0, 2.0, 0};
+        origin = {0, 0, 0};
     }
     ray get_ray(float u, float v){
         vec3 b = (left_lower_corner + u * horizontal + v*vertical);
-        b.make_unit_vector();
         return ray{origin, b};
     }
 

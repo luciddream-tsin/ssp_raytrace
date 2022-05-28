@@ -56,10 +56,7 @@ inline std::ostream& operator << (std::ostream &os, vec3& v){
 vec3 &vec3::operator+=(const vec3 &v2) {
     e[0] += v2.e[0];
     e[1] += v2.e[1];
-
-    float & x = e[2];
-    float t = v2.e[2];
-
+    e[2] += v2.e[2];
     return *this;
 }
 
@@ -144,7 +141,7 @@ inline vec3 operator*(const vec3& v, float t){
 inline vec3 operator*(float t,const vec3& v){
     return vec3{v.e[0]*t, v.e[1]*t, v.e[2]*t};
 }
-inline vec3 operator/(vec3& v, float t){
+inline vec3 operator/(const vec3& v, float t){
     return vec3{v.e[0]/t, v.e[1]/t, v.e[2]/t};
 }
 
