@@ -15,6 +15,7 @@
 
 vec3 ray_color(const ray& r, hitable_list &world, int depth){
 
+
     hit_record record;
     record.mat_ptr = nullptr;
     if (world.hit(r, 0.0001, FLT_MAX, record)){
