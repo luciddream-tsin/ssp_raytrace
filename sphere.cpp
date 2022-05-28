@@ -18,17 +18,18 @@ bool sphere::hit(const ray &r, float tmin, float tmax, hit_record &record) const
             record.p = r.point_at_para(t1);
             record.normal = (record.p - center);
             record.normal.make_unit_vector();
+            record.mat_ptr = mat_ptr;
             return true;
-        }else {
+        }
 
-            float t2 = (-b + std::sqrt(discriminant)) / (2 * a);
-            if (tmin < t2 && t2 < tmax) {
-                record.t = t2;
-                record.p = r.point_at_para(t2);
-                record.normal = (record.p - center) ;
-                record.normal.make_unit_vector();
-                return true;
-            }
+        float t2 = (-b + std::sqrt(discriminant)) / (2 * a);
+        if (tmin < t2 && t2 < tmax) {
+            record.t = t2;
+            record.p = r.point_at_para(t2);
+            record.normal = (record.p - center) ;
+            record.normal.make_unit_vector();
+            record.mat_ptr = mat_ptr;
+            return true;
         }
     }
     return false;
