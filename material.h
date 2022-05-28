@@ -37,18 +37,25 @@ public:
 
 class metal: public material{
 public:
-    metal(const vec3& a):albedo(a){}
+    metal(const vec3& a, float f ):albedo(a){
+        fuzz = (f < 1.0)?f:1.0;
+    }
     bool scatter(const ray &in_ray, const hit_record &recd, ray &scattered) const override{
         vec3 reflected = reflect(make_unit(in_ray.direc()), recd.normal);
-        scattered = ray(recd.p, reflected);
+        scattered = ray(recd.p, reflected + fuzz * random_in_unit_shpere());
         return (dot(recd.normal, reflected) > 0);
     }
-
     vec3 get_albedo() const override{
         return albedo;
     }
     vec3 albedo;
+    float fuzz;
 };
 
+//class dielectric: public material{
+//public:
+//
+//
+//};
 
 #endif //RAYTRACE_WEEK1_MATERIAL_H

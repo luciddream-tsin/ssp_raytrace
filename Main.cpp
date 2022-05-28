@@ -39,31 +39,32 @@ vec3 ray_color(const ray& r, hitable_list &world, int depth){
 
 
 int main(){
-    int nx = 200;
-    int ny = 100;
+    int image_width = 800;
+    int image_hieght = 660;
     std::ofstream of("background.ppm");
-    of << "P3" << std::endl << nx << " " << ny << std::endl << "255" << "\n";
-    float sample_freq = 20;
+    of << "P3" << std::endl << image_width << " " << image_hieght << std::endl << "255" << "\n";
+    float sample_freq = 100;
 
-    hitable* list[4];
+    hitable* list[5];
     list[0] = new sphere(vec3{0, 0, -1}, 0.5, new lambertian(vec3{0.6, 0.2, 0.5}));
     list[1] = new sphere(vec3{0, -100.5, -1}, 100., new lambertian(vec3{0.5, 0.5, 0.5}));
-    list[2] = new sphere(vec3{-1, 0, -1}, 0.5, new metal(vec3{0.5, 0.9, 0.5}));
-    list[3] = new sphere(vec3{1, 0, -1}, 0.5, new metal(vec3{0.5, 0.5, 0.5}));
+    list[2] = new sphere(vec3{-1, 0, -1}, 0.5, new metal(vec3{0.9, 0.9, 0.5}, .0));
+    list[4] = new sphere(vec3{-1.2, 0, -0.5}, 0.55, new lambertian(vec3{0.9, 0.9, 0.0}));
+    list[3] = new sphere(vec3{1, 0, -1}, 0.5, new metal(vec3{0.5, 0.1, 0.9}, .8));
 
-    hitable_list world{list, 4};
+    hitable_list world{list, 5};
 
 
-    camera came{};
+    camera came{vec3{-1.,1.,0.5}, vec3{0, 0, -1}, vec3{0,1,0},100, image_width*1.0/image_hieght};
 
-    for (int j = ny-1; j >=0 ; --j) {
-        for (int i = 0; i < nx; ++i) {
+    for (int j = image_hieght - 1; j >= 0 ; --j) {
+        for (int i = 0; i < image_width; ++i) {
 
             ray r;
             vec3 c{0,0,0};
             for (int k = 0; k < sample_freq; ++k) {
-                float u = (float(i) + get_random())/float(nx);
-                float v = (float(j) + get_random())/float(ny);
+                float u = (float(i) + get_random())/float(image_width);
+                float v = (float(j) + get_random())/float(image_hieght);
                 r = came.get_ray(u, v);
                 c += ray_color(r, world, 30);
             }
