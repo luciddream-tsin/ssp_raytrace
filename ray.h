@@ -9,7 +9,7 @@
 class ray {
 public:
     ray(){};
-    ray(const vec3& a, const vec3& b){A=a;B=b;}
+    ray(const vec3& a, const vec3 b){A=a;B=b;}
 
     vec3 start()const {return A;}
     vec3 direc()const {return B;}
