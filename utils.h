@@ -7,6 +7,7 @@
 
 #include "vec3.h"
 vec3 reflect(const vec3& v, const vec3& n);
+vec3 refract(const vec3& v, const vec3& n, float etai_over_etat);
 
 double get_random();
 vec3 random_in_unit_shpere();

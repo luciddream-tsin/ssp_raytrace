@@ -10,17 +10,17 @@ vec3 reflect(const vec3& v, const vec3& n){
     return  - 2 * n * dot(n, v) + v;
 }
 
-//bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& refracted){
-//    vec3 uv = make_unit(v);
-//    float dt = dot(uv, n);
-//    float discriminate = 1.0 - ni_over_nt*ni_over_nt*(1-dt*dt);
-//    if (discriminate>0){
-//        refracted = ni_over_nt * (uv - n*dt) -  n* sqrt(discriminate);
-//        return true;
-//    }else{
-//        return false;
-//    }
-//}
+vec3 refract(const vec3& v, const vec3& n, float etai_over_etat){
+    //vec3 r = make_unit(v);
+    vec3 r = v;//v have been united.
+    float cos_theta = dot(-r, n);
+
+
+    vec3 r_out_parallel = etai_over_etat * (r + cos_theta*n);
+    vec3 r_out_vertical = -sqrt(1.0 - r_out_parallel.squred_length()) * n;
+    auto refracted = r_out_parallel + r_out_vertical;
+    return refracted;
+}
 
 double get_random(){
     std::random_device rd;

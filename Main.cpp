@@ -39,23 +39,22 @@ vec3 ray_color(const ray& r, hitable_list &world, int depth){
 
 
 int main(){
-    int image_width = 800;
-    int image_hieght = 660;
+    int image_width = 400;
+    int image_hieght = 260;
     std::ofstream of("background.ppm");
     of << "P3" << std::endl << image_width << " " << image_hieght << std::endl << "255" << "\n";
-    float sample_freq = 100;
+    float sample_freq = 20;
 
     hitable* list[5];
     list[0] = new sphere(vec3{0, 0, -1}, 0.5, new lambertian(vec3{0.6, 0.2, 0.5}));
-    list[1] = new sphere(vec3{0, -100.5, -1}, 100., new lambertian(vec3{0.5, 0.5, 0.5}));
+    list[1] = new sphere(vec3{0, -100.5, -1}, 100., new lambertian(vec3{0.9, 0.5, 0.5}));
     list[2] = new sphere(vec3{-1, 0, -1}, 0.5, new metal(vec3{0.9, 0.9, 0.5}, .0));
-    list[4] = new sphere(vec3{-1.2, 0, -0.5}, 0.55, new lambertian(vec3{0.9, 0.9, 0.0}));
     list[3] = new sphere(vec3{1, 0, -1}, 0.5, new metal(vec3{0.5, 0.1, 0.9}, .8));
+    list[4] = new sphere(vec3{-1.5, 0, -0.2}, 0.55, new dielectric(vec3{1.0, 1.0, 1.0}, 1.3));
 
     hitable_list world{list, 5};
 
-
-    camera came{vec3{-1.,1.,0.5}, vec3{0, 0, -1}, vec3{0,1,0},100, image_width*1.0/image_hieght};
+    camera came{vec3{-1.,1.,1.5}, vec3{0, 0, -1}, vec3{0,1,0},100, image_width*1.0/image_hieght};
 
     for (int j = image_hieght - 1; j >= 0 ; --j) {
         for (int i = 0; i < image_width; ++i) {
